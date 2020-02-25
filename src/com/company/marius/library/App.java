@@ -1,10 +1,11 @@
 package com.company.marius.library;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
 
-    private static Library lib = new Library();
+    private static Library library = new Library();
 
     public static void main(String[] args) {
 
@@ -57,28 +58,83 @@ public class App {
                     + "\t- 2: list all users\n"
                     + "\t- 3: remove user");
             choice = sc.nextLine();
-        } while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
 
-        if(choice.equals("1"))
+        if (choice.equals("1"))
             addUser(sc);
-        else if(choice.equals("2"))
-            lib.printAllUsers();
+        else if (choice.equals("2"))
+            library.printAllUsers();
         else
             deleteUser(sc);
     }
 
     private static void deleteUser(Scanner sc) {
 
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+        int idx = library.checkIfUserExistsAndReturnIdx(id);
+        if (idx != -1) {
+            library.deleteUser(idx);
+            System.out.println("User deleted!");
+        } else {
+            System.out.println("User does not exist with this id!");
+        }
+    }
+
+    private static int handleNumericInput(Scanner sc, String message) {
+        int id = 0;
+        boolean intputInvalid = true;
+        while (intputInvalid) {
+            System.out.println(message);
+            try {
+                id = sc.nextInt();
+                sc.nextLine();
+                intputInvalid = false;
+            } catch (InputMismatchException ignored) {
+                System.out.println("Incorrect value, please retry!");
+                sc.nextLine();
+            }
+        }
+        return id;
     }
 
     private static void addUser(Scanner sc) {
 
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+        int idx = library.checkIfUserExistsAndReturnIdx(id);
+        if (idx != -1) {
+            library.deleteUser(idx);
+            System.out.println("User deleted!");
+        } else {
+            System.out.println("User does not exist with this id!");
+        }
     }
 
     private static void librariansBooksMenu(Scanner sc) {
 
+        String choice;
+        do {
+            System.out.println("\nPress: \n"
+                    + "\t- 1: add book\n"
+                    + "\t- 2: list all books\n"
+                    + "\t- 3: remove book");
+            choice = sc.nextLine();
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
+
+        if (choice.equals("1"))
+            addBook(sc);
+        else if (choice.equals("2"))
+            library.printAllBooks();
+        else
+            deleteBook(sc);
     }
 
+    private static void deleteBook(Scanner sc) {
+
+    }
+
+    private static void addBook(Scanner sc) {
+
+    }
 
 
     private static void handleUser(Scanner sc) {
