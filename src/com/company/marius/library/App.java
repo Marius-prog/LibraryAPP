@@ -38,6 +38,7 @@ public class App {
     }
 
     private static void handleUser(Scanner sc) {
+        System.out.println("yes");
 
 
     }
