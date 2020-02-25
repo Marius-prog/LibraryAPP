@@ -34,16 +34,33 @@ public class App {
 
             }
 
-        }while (true);
+        } while (true);
+    }
+
+
+    private static void handleLibrarian(Scanner sc) {
+
+        String choice;
+        do {
+            System.out.println("\nPress: \n"
+                    + "\t- 1: users menu\n"
+                    + "\t- 2: books menu");
+            choice = sc.nextLine();
+        }while (!choice.equals("1") && !choice.equals("2"));
+
+        if(choice.equals("1")) librarianUsersMenu(sc);
+        else librariansBooksMenu(sc);
+    }
+
+    private static void librariansBooksMenu(Scanner sc) {
+
+    }
+
+    private static void librarianUsersMenu(Scanner sc) {
+
     }
 
     private static void handleUser(Scanner sc) {
-        System.out.println("yes");
-
-
-    }
-
-    private static void handleLibrarian(Scanner sc) {
 
 
     }
