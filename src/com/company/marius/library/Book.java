@@ -61,11 +61,18 @@ public class Book extends LibraryItem {
         super.setId(id);
     }
 
-    public String bookExtendedInfo(){
+    public String bookExtendedInfo() {
         return "Title: " + title
                 + " , Author: " + author
                 + " , Id: " + super.getId()
                 + " , Isbn:" + isbn
                 + " , description: " + description;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title +
+                " , Author: " + author +
+                " , Id: " + super.getId();
     }
 }

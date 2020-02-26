@@ -1,8 +1,6 @@
 package com.company.marius.library;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,23 +13,75 @@ public class Library {
 
 
     public Library() {
+        loadUsersFile();
+        loadBooksFile();
+    }
 
+    private void loadBooksFile() {
+        FileInputStream fis = null;
+        ObjectInputStream in = null;
+        File file = new File(booksFileName);
+        if (file.exists()) {
+            try {
+                fis = new FileInputStream(file);
+                in = new ObjectInputStream(fis);
+                books = (List<Book>) in.readObject();
+                fis.close();
+                in.close();
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("\nfile does not exist!");
+        }
+    }
+
+    private void loadUsersFile() {
+        FileInputStream fis = null;
+        ObjectInputStream in = null;
+        File file = new File(usersFileName);
+        if (file.exists()) {
+            try {
+                fis = new FileInputStream(file);
+                in = new ObjectInputStream(fis);
+                users = (List<User>) in.readObject();
+                fis.close();
+                in.close();
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("\nfile does not exist!");
+        }
     }
 
     public void printAllUsers() {
-
+        for (User user: users) {
+            System.out.println(user);
+        }
     }
 
     public void printAllBooks() {
 
+        for (Book book: books) {
+            System.out.println(book);
+        }
     }
 
     public int checkIfUserExistsAndReturnIdx(int id) {
-        return 0;
+        User user;
+        for (int i = 0; i < users.size() ; i++) {
+            user = users.get(i);
+            if(user.getUserId() == id)
+                return i;
+        }
+        return -1;
     }
 
     public void deleteUser(int idx) {
 
+        users.remove(idx);
+        this.saveUsers();
     }
 
     public void addUser(User user) {

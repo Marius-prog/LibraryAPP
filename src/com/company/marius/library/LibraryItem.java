@@ -14,5 +14,4 @@ public abstract class LibraryItem implements Serializable {
         this.id = id;
     }
 
-
 }
