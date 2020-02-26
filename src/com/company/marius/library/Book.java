@@ -69,11 +69,13 @@ public class Book extends LibraryItem {
     }
 
     public String bookExtendedInfo() {
-        return "Title: " + title
-                + " , Author: " + author
-                + " , Id: " + super.getId()
-                + " , Isbn:" + isbn
-                + " , description: " + description;
+
+        return "Title: " + title + "\n"
+                + "Author: " + author + "\n"
+                + "Id: " + super.getId() + "\n"
+                + "Isbn:" + isbn + "\n"
+                + "description: " + description;
+
     }
 
     @Override
