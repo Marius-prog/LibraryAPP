@@ -56,23 +56,23 @@ public class Library {
     }
 
     public void printAllUsers() {
-        for (User user: users) {
+        for (User user : users) {
             System.out.println(user);
         }
     }
 
     public void printAllBooks() {
 
-        for (Book book: books) {
+        for (Book book : books) {
             System.out.println(book);
         }
     }
 
     public int checkIfUserExistsAndReturnIdx(int id) {
         User user;
-        for (int i = 0; i < users.size() ; i++) {
+        for (int i = 0; i < users.size(); i++) {
             user = users.get(i);
-            if(user.getUserId() == id)
+            if (user.getUserId() == id)
                 return i;
         }
         return -1;
@@ -124,9 +124,9 @@ public class Library {
 
     public int checkIfBookExistsAndReturnIdx(int id) {
         Book book;
-        for (int i = 0; i < books.size() ; i++) {
+        for (int i = 0; i < books.size(); i++) {
             book = books.get(i);
-            if(book.getId() == id)
+            if (book.getId() == id)
                 return i;
         }
         return -1;
@@ -139,9 +139,9 @@ public class Library {
 
     public Book getBookById(int id) {
         Book bookUnderInvestigation = null;
-        for (int i = 0; i < books.size() ; i++) {
+        for (int i = 0; i < books.size(); i++) {
             bookUnderInvestigation = books.get(i);
-            if(bookUnderInvestigation.getId() == id)
+            if (bookUnderInvestigation.getId() == id)
                 return bookUnderInvestigation;
         }
         return bookUnderInvestigation;
@@ -149,24 +149,24 @@ public class Library {
 
     public List<Book> searchBookByAuthor(String authorName) {
         List<Book> booksForAuthor = new ArrayList<>();
-        for (Book book: books)
-            if(book.getAuthor().contains(authorName))
+        for (Book book : books)
+            if (book.getAuthor().contains(authorName))
                 booksForAuthor.add(book);
         return booksForAuthor;
     }
 
     public List<Book> searchBookByTitle(String title) {
         List<Book> booksWithTitle = new ArrayList<>();
-        for (Book book: books)
-            if(book.getTitle().contains(title))
+        for (Book book : books)
+            if (book.getTitle().contains(title))
                 booksWithTitle.add(book);
         return booksWithTitle;
     }
 
     public List<Book> getAllBooksForUser(String userName) {
         List<Book> booksBorrowedByUser = new ArrayList<>();
-        for (Book book: books)
-            if(book.getNameOfOccupyingReader().equals(userName))
+        for (Book book : books)
+            if (book.getNameOfOccupyingReader().equals(userName))
                 booksBorrowedByUser.add(book);
         return booksBorrowedByUser;
     }

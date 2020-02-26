@@ -13,6 +13,13 @@ public class Book extends LibraryItem {
     }
 
 
+//    public Book() {
+//        super.setId(0);
+//        title = null;
+//        author = null;
+//        this.nameOfOccupyingReader = "";
+//    }
+
     public String getTitle() {
         return title;
     }
