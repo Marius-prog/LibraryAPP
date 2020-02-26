@@ -36,7 +36,7 @@ public class App {
             }
         } while (true);
     }
-
+//////////////////////////// LIBRARIAN METHODS /////////////////
     private static void handleLibrarian(Scanner sc) {
         String choice;
         do {
@@ -50,7 +50,6 @@ public class App {
     }
 
     private static void librarianUsersMenu(Scanner sc) {
-
         String choice;
         do {
             System.out.println("\nPress: \n"
@@ -66,6 +65,38 @@ public class App {
             library.printAllUsers();
         else
             deleteUser(sc);
+    }
+
+    private static void librariansBooksMenu(Scanner sc) {
+
+        String choice;
+        do {
+            System.out.println("\nPress: \n"
+                    + "\t- 1: add book\n"
+                    + "\t- 2: list all books\n"
+                    + "\t- 3: remove book");
+            choice = sc.nextLine();
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
+
+        if (choice.equals("1"))
+            addBook(sc);
+        else if (choice.equals("2"))
+            library.printAllBooks();
+        else
+            deleteBook(sc);
+    }
+
+    private static void addUser(Scanner sc) {
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+
+        System.out.println("\nEnter User's name: ");
+        String name = sc.nextLine();
+
+        String msg = "\nEnter User's mobile number: ";
+        int mobileNumber = handleNumericInput(sc, msg);
+
+        User user = new User(name, id, mobileNumber);
+        library.addUser(user);
     }
 
     private static void deleteUser(Scanner sc) {
@@ -97,42 +128,31 @@ public class App {
         return id;
     }
 
-    private static void addUser(Scanner sc) {
 
-        int id = handleNumericInput(sc, "\nEnter ID: ");
-        int idx = library.checkIfUserExistsAndReturnIdx(id);
-        if (idx != -1) {
-            library.deleteUser(idx);
-            System.out.println("User deleted!");
-        } else {
-            System.out.println("User does not exist with this id!");
-        }
-    }
 
-    private static void librariansBooksMenu(Scanner sc) {
 
-        String choice;
-        do {
-            System.out.println("\nPress: \n"
-                    + "\t- 1: add book\n"
-                    + "\t- 2: list all books\n"
-                    + "\t- 3: remove book");
-            choice = sc.nextLine();
-        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
-
-        if (choice.equals("1"))
-            addBook(sc);
-        else if (choice.equals("2"))
-            library.printAllBooks();
-        else
-            deleteBook(sc);
-    }
 
     private static void deleteBook(Scanner sc) {
 
     }
 
     private static void addBook(Scanner sc) {
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+
+        System.out.println("\nEnter title: ");
+        String title = sc.nextLine();
+
+        System.out.println("\nEnter author: ");
+        String author = sc.nextLine();
+
+        System.out.println("\nEnter isbn: ");
+        String isbn = sc.nextLine();
+
+        System.out.println("\nEnter description: ");
+        String description = sc.nextLine();
+
+        Book book = new Book(title, id, author, isbn, description);
+        library.addBook(book);
 
     }
 

@@ -1,5 +1,8 @@
 package com.company.marius.library;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,5 +32,43 @@ public class Library {
 
     public void deleteUser(int idx) {
 
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+        this.saveUsers();
+    }
+
+    private void saveUsers() {
+        FileOutputStream fos = null;
+        ObjectOutputStream out = null;
+        try {
+            fos = new FileOutputStream(usersFileName);
+            out = new ObjectOutputStream(fos);
+            out.writeObject(users);
+            fos.close();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+        this.saveBooks();
+    }
+
+    private void saveBooks() {
+        FileOutputStream fos = null;
+        ObjectOutputStream out = null;
+        try {
+            fos = new FileOutputStream(booksFileName);
+            out = new ObjectOutputStream(fos);
+            out.writeObject(books);
+            fos.close();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
