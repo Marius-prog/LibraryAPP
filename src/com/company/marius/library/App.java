@@ -280,10 +280,15 @@ public class App {
 
     private static void userPrintAllBookInfo(Scanner sc) {
         int id = handleNumericInput(sc, "\nEnter ID: ");
-        Book book = library.getBookById(id);
-        if(book == null) System.out.println("No such book!");
-        System.out.println(book.bookExtendedInfo());
+        try {
+            Book book = library.getBookById(id);
+            if (book == null) System.out.println("No such book!");
+            System.out.println(book.bookExtendedInfo());
+        }catch (NullPointerException ignor){
+            System.out.println("--------------");
+        }
     }
+
 
 
     private static int handleNumericInput(Scanner sc, String message) {
