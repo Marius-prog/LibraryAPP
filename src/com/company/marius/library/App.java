@@ -1,6 +1,7 @@
 package com.company.marius.library;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -36,7 +37,8 @@ public class App {
             }
         } while (true);
     }
-//////////////////////////// LIBRARIAN METHODS /////////////////
+
+    //////////////////////////// LIBRARIAN METHODS /////////////////
     private static void handleLibrarian(Scanner sc) {
         String choice;
         do {
@@ -135,7 +137,7 @@ public class App {
 
         int id = handleNumericInput(sc, "\nEnter ID: ");
         int idx = library.checkIfBookExistsAndReturnIdx(id);
-        if(idx != -1) {
+        if (idx != -1) {
             library.deleteBook(idx);
             System.out.println("Book deleted!");
         } else {
@@ -144,6 +146,145 @@ public class App {
     }
 
     ////////////////// USERS METHODS ///////////////////////////
+
+    private static void handleUser(Scanner sc) {
+
+        String choice;
+        do {
+            System.out.println("\nPress: \n"
+                    + "\t- 0: list all books in library\n"
+                    + "\t- 1: for more information about a book\n"
+                    + "\t- 2: to borrow a book\n"
+                    + "\t- 3: search by title or author\n"
+                    + "\t- 4: list books you borrowed\n"
+                    + "\t- 5: return a book"
+            );
+
+            choice = sc.nextLine();
+        }while (!choice.equals("0")
+                && !choice.equals("1")
+                && !choice.equals("2")
+                && !choice.equals("3")
+                && !choice.equals("4")
+                && !choice.equals("5")
+        );
+
+        switch (choice){
+            case "0":
+                library.printAllBooks();
+                break;
+            case "1":
+                userPrintAllBookInfo(sc);
+                break;
+            case "2":
+                userBorrowsBook(sc);
+                break;
+            case "3":
+                searchBookByTitleOrAuthor(sc);
+                break;
+            case "4":
+                userChecksTheBooksHeBorrowed(sc);
+                break;
+            case "5":
+                userReturnsBook(sc);
+                break;
+        }
+    }
+
+    private static void userReturnsBook(Scanner sc) {
+        System.out.print("Please enter your name: ");
+        String name = sc.nextLine();
+        System.out.print("Please enter the book id you want to return: ");
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+        handleBookReturn(name, id);
+    }
+
+    private static void handleBookReturn(String name, int id) {
+        Book book = library.getBookById(id);
+        if(book != null)
+            if(!book.getNameOfOccupyingReader().equals(name))
+                System.out.println("This book was not borrowed by you!");
+            else if(book.getNameOfOccupyingReader().equals(""))
+                System.out.println("Please provide a valid name!");
+            else{
+                book.setNameOfOccupyingReader("");
+                library.saveBooks();  //!!!!!!!!!!!!!!!!!!!
+                System.out.println("Book was returned successfully!");
+            }
+        else System.out.println("Could not find book with id: " + id);
+    }
+
+    private static void userChecksTheBooksHeBorrowed(Scanner sc) {
+        System.out.print("Please enter your name: ");
+        String name = sc.nextLine();
+        List<Book> booksForUser = library.getAllBooksForUser(name);
+        if(booksForUser.size() == 0)
+            System.out.println("No books for this user were found!");
+        else
+            booksForUser.forEach(System.out::println);
+    }
+
+    private static void searchBookByTitleOrAuthor(Scanner sc) {
+        System.out.println("\nPress: \n"
+                + "\t- 0: to search by author\n"
+                + "\t- 1: to search by title");
+        String choice = sc.nextLine();
+        if(choice.equals("0")){
+            System.out.println("Please enter an author to search by: ");
+            String author = sc.nextLine();
+            if(author.equals("")) System.out.println("Please provide a valid author!");
+            else {
+                List<Book> booksForAuthor = library.searchBookByAuthor(author);
+                if(booksForAuthor.size() == 0)
+                    System.out.println("No books by this author!");
+                else
+                    System.out.println(booksForAuthor);
+            }
+        } else if(choice.equals("1")) {
+            System.out.println("Please enter a title to search by: ");
+            String title = sc.nextLine();
+            if(title.equals("")) System.out.println("Please provide a valid title!");
+            else {
+                List<Book> booksWithTitle = library.searchBookByTitle(title);
+                if(booksWithTitle.size() == 0)
+                    System.out.println("No books with this title!");
+                else
+                    System.out.println(booksWithTitle);
+            }
+        } else {
+            System.out.println("No such option!");
+        }
+    }
+
+    private static void userBorrowsBook(Scanner sc) {
+        System.out.print("Please enter your name: ");
+        String name = sc.nextLine();
+        System.out.print("Please enter the book id you want to borrow: ");
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+        handleBookBorrowing(name, id);
+    }
+
+    private static void handleBookBorrowing(String name, int id) {
+        Book book = library.getBookById(id);
+        if(book != null)
+            if(book.getNameOfOccupyingReader().equals("")){
+                book.setNameOfOccupyingReader(name);
+                library.saveBooks();   //!!!!!!!!!!!!!!!!!!
+                System.out.println("Book assigned to user: " + book.getNameOfOccupyingReader());
+            } else if(book.getNameOfOccupyingReader().equals(name))
+                System.out.println("You already have this book!");
+            else
+                System.out.println("The book is taken by: " + book.getNameOfOccupyingReader());
+        else System.out.println("Could not find book with id: " + id);
+    }
+
+    private static void userPrintAllBookInfo(Scanner sc) {
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+        Book book = library.getBookById(id);
+        if(book == null) System.out.println("No such book!");
+        System.out.println(book.bookExtendedInfo());
+    }
+
 
     private static int handleNumericInput(Scanner sc, String message) {
         int id = 0;
@@ -163,15 +304,4 @@ public class App {
     }
 
 
-
-
-
-
-
-
-
-
-    private static void handleUser(Scanner sc) {
-
-    }
 }

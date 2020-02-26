@@ -60,4 +60,12 @@ public class Book extends LibraryItem {
     public void setId(int id) {
         super.setId(id);
     }
+
+    public String bookExtendedInfo(){
+        return "Title: " + title
+                + " , Author: " + author
+                + " , Id: " + super.getId()
+                + " , Isbn:" + isbn
+                + " , description: " + description;
+    }
 }

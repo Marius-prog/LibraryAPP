@@ -58,7 +58,7 @@ public class Library {
         this.saveBooks();
     }
 
-    private void saveBooks() {
+    void saveBooks() {
         FileOutputStream fos = null;
         ObjectOutputStream out = null;
         try {
@@ -85,5 +85,39 @@ public class Library {
     public void deleteBook(int idx) {
         books.remove(idx);
         this.saveBooks();
+    }
+
+    public Book getBookById(int id) {
+        Book bookUnderInvestigation = null;
+        for (int i = 0; i < books.size() ; i++) {
+            bookUnderInvestigation = books.get(i);
+            if(bookUnderInvestigation.getId() == id)
+                return bookUnderInvestigation;
+        }
+        return bookUnderInvestigation;
+    }
+
+    public List<Book> searchBookByAuthor(String authorName) {
+        List<Book> booksForAuthor = new ArrayList<>();
+        for (Book book: books)
+            if(book.getAuthor().contains(authorName))
+                booksForAuthor.add(book);
+        return booksForAuthor;
+    }
+
+    public List<Book> searchBookByTitle(String title) {
+        List<Book> booksWithTitle = new ArrayList<>();
+        for (Book book: books)
+            if(book.getTitle().contains(title))
+                booksWithTitle.add(book);
+        return booksWithTitle;
+    }
+
+    public List<Book> getAllBooksForUser(String userName) {
+        List<Book> booksBorrowedByUser = new ArrayList<>();
+        for (Book book: books)
+            if(book.getNameOfOccupyingReader().equals(userName))
+                booksBorrowedByUser.add(book);
+        return booksBorrowedByUser;
     }
 }
