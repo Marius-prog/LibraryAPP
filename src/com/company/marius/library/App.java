@@ -111,6 +111,40 @@ public class App {
         }
     }
 
+    private static void addBook(Scanner sc) {
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+
+        System.out.println("\nEnter title: ");
+        String title = sc.nextLine();
+
+        System.out.println("\nEnter author: ");
+        String author = sc.nextLine();
+
+        System.out.println("\nEnter isbn: ");
+        String isbn = sc.nextLine();
+
+        System.out.println("\nEnter description: ");
+        String description = sc.nextLine();
+
+        Book book = new Book(title, id, author, isbn, description);
+        library.addBook(book);
+
+    }
+
+    private static void deleteBook(Scanner sc) {
+
+        int id = handleNumericInput(sc, "\nEnter ID: ");
+        int idx = library.checkIfBookExistsAndReturnIdx(id);
+        if(idx != -1) {
+            library.deleteBook(idx);
+            System.out.println("Book deleted!");
+        } else {
+            System.out.println("Book does not exist with this id!");
+        }
+    }
+
+    ////////////////// USERS METHODS ///////////////////////////
+
     private static int handleNumericInput(Scanner sc, String message) {
         int id = 0;
         boolean intputInvalid = true;
@@ -132,29 +166,9 @@ public class App {
 
 
 
-    private static void deleteBook(Scanner sc) {
 
-    }
 
-    private static void addBook(Scanner sc) {
-        int id = handleNumericInput(sc, "\nEnter ID: ");
 
-        System.out.println("\nEnter title: ");
-        String title = sc.nextLine();
-
-        System.out.println("\nEnter author: ");
-        String author = sc.nextLine();
-
-        System.out.println("\nEnter isbn: ");
-        String isbn = sc.nextLine();
-
-        System.out.println("\nEnter description: ");
-        String description = sc.nextLine();
-
-        Book book = new Book(title, id, author, isbn, description);
-        library.addBook(book);
-
-    }
 
 
     private static void handleUser(Scanner sc) {

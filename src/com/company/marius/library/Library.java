@@ -71,4 +71,19 @@ public class Library {
             e.printStackTrace();
         }
     }
+
+    public int checkIfBookExistsAndReturnIdx(int id) {
+        Book book;
+        for (int i = 0; i < books.size() ; i++) {
+            book = books.get(i);
+            if(book.getId() == id)
+                return i;
+        }
+        return -1;
+    }
+
+    public void deleteBook(int idx) {
+        books.remove(idx);
+        this.saveBooks();
+    }
 }
