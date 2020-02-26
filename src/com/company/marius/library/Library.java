@@ -62,11 +62,12 @@ public class Library {
     }
 
     public void printAllBooks() {
-
         for (Book book : books) {
-            System.out.println(book);
+                System.out.println(book);
+
+            }
         }
-    }
+
 
     public int checkIfUserExistsAndReturnIdx(int id) {
         User user;

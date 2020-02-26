@@ -44,11 +44,14 @@ public class App {
         do {
             System.out.println("\nPress: \n"
                     + "\t- 1: users menu\n"
-                    + "\t- 2: books menu");
+                    + "\t- 2: books menu\n"
+                    + "\t- q: to quit the program");
             choice = sc.nextLine();
-        } while (!choice.equals("1") && !choice.equals("2"));
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("q"));
         if (choice.equals("1")) librarianUsersMenu(sc);
-        else librariansBooksMenu(sc);
+        else if (choice.equals("2")) librariansBooksMenu(sc);
+        else System.out.println("bye bye!");
+        System.exit(0);
     }
 
     private static void librarianUsersMenu(Scanner sc) {
@@ -57,16 +60,20 @@ public class App {
             System.out.println("\nPress: \n"
                     + "\t- 1: add user\n"
                     + "\t- 2: list all users\n"
-                    + "\t- 3: remove user");
+                    + "\t- 3: remove user\n"
+                    + "\t- q: to quit the program");
             choice = sc.nextLine();
-        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("q"));
 
         if (choice.equals("1"))
             addUser(sc);
         else if (choice.equals("2"))
             library.printAllUsers();
-        else
+        else if (choice.equals("3"))
             deleteUser(sc);
+        else System.out.println("bye bye!");
+        System.exit(0);
+
     }
 
     private static void librariansBooksMenu(Scanner sc) {
@@ -76,16 +83,19 @@ public class App {
             System.out.println("\nPress: \n"
                     + "\t- 1: add book\n"
                     + "\t- 2: list all books\n"
-                    + "\t- 3: remove book");
+                    + "\t- 3: remove book\n"
+                    + "\t- q: to quit the program");
             choice = sc.nextLine();
-        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("q"));
 
         if (choice.equals("1"))
             addBook(sc);
         else if (choice.equals("2"))
             library.printAllBooks();
-        else
+        else if (choice.equals("3"))
             deleteBook(sc);
+        else System.out.println("bye bye!");
+        System.exit(0);
     }
 
     private static void addUser(Scanner sc) {
@@ -161,7 +171,7 @@ public class App {
             );
 
             choice = sc.nextLine();
-        }while (!choice.equals("0")
+        } while (!choice.equals("0")
                 && !choice.equals("1")
                 && !choice.equals("2")
                 && !choice.equals("3")
@@ -169,7 +179,7 @@ public class App {
                 && !choice.equals("5")
         );
 
-        switch (choice){
+        switch (choice) {
             case "0":
                 library.printAllBooks();
                 break;
@@ -201,12 +211,12 @@ public class App {
 
     private static void handleBookReturn(String name, int id) {
         Book book = library.getBookById(id);
-        if(book != null)
-            if(!book.getNameOfOccupyingReader().equals(name))
+        if (book != null)
+            if (!book.getNameOfOccupyingReader().equals(name))
                 System.out.println("This book was not borrowed by you!");
-            else if(book.getNameOfOccupyingReader().equals(""))
+            else if (book.getNameOfOccupyingReader().equals(""))
                 System.out.println("Please provide a valid name!");
-            else{
+            else {
                 book.setNameOfOccupyingReader("");
                 library.saveBooks();  //!!!!!!!!!!!!!!!!!!!
                 System.out.println("Book was returned successfully!");
@@ -218,7 +228,7 @@ public class App {
         System.out.print("Please enter your name: ");
         String name = sc.nextLine();
         List<Book> booksForUser = library.getAllBooksForUser(name);
-        if(booksForUser.size() == 0)
+        if (booksForUser.size() == 0)
             System.out.println("No books for this user were found!");
         else
             booksForUser.forEach(System.out::println);
@@ -229,24 +239,24 @@ public class App {
                 + "\t- 0: to search by author\n"
                 + "\t- 1: to search by title");
         String choice = sc.nextLine();
-        if(choice.equals("0")){
+        if (choice.equals("0")) {
             System.out.println("Please enter an author to search by: ");
             String author = sc.nextLine();
-            if(author.equals("")) System.out.println("Please provide a valid author!");
+            if (author.equals("")) System.out.println("Please provide a valid author!");
             else {
                 List<Book> booksForAuthor = library.searchBookByAuthor(author);
-                if(booksForAuthor.size() == 0)
+                if (booksForAuthor.size() == 0)
                     System.out.println("No books by this author!");
                 else
                     System.out.println(booksForAuthor);
             }
-        } else if(choice.equals("1")) {
+        } else if (choice.equals("1")) {
             System.out.println("Please enter a title to search by: ");
             String title = sc.nextLine();
-            if(title.equals("")) System.out.println("Please provide a valid title!");
+            if (title.equals("")) System.out.println("Please provide a valid title!");
             else {
                 List<Book> booksWithTitle = library.searchBookByTitle(title);
-                if(booksWithTitle.size() == 0)
+                if (booksWithTitle.size() == 0)
                     System.out.println("No books with this title!");
                 else
                     System.out.println(booksWithTitle);
@@ -266,12 +276,12 @@ public class App {
 
     private static void handleBookBorrowing(String name, int id) {
         Book book = library.getBookById(id);
-        if(book != null)
-            if(book.getNameOfOccupyingReader().equals("")){
+        if (book != null)
+            if (book.getNameOfOccupyingReader().equals("")) {
                 book.setNameOfOccupyingReader(name);
                 library.saveBooks();   //!!!!!!!!!!!!!!!!!!
                 System.out.println("Book assigned to user: " + book.getNameOfOccupyingReader());
-            } else if(book.getNameOfOccupyingReader().equals(name))
+            } else if (book.getNameOfOccupyingReader().equals(name))
                 System.out.println("You already have this book!");
             else
                 System.out.println("The book is taken by: " + book.getNameOfOccupyingReader());
@@ -279,16 +289,16 @@ public class App {
     }
 
     private static void userPrintAllBookInfo(Scanner sc) {
+
         int id = handleNumericInput(sc, "\nEnter ID: ");
         try {
             Book book = library.getBookById(id);
-            if (book == null) System.out.println("No such book!");
+            if (book == null) System.out.println("No such book is in library !");
             System.out.println(book.bookExtendedInfo());
-        }catch (NullPointerException ignor){
-            System.out.println("--------------");
+        } catch (Exception io) {
+            System.out.println("---------------------------------");
         }
     }
-
 
 
     private static int handleNumericInput(Scanner sc, String message) {

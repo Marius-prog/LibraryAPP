@@ -33,10 +33,6 @@ public class User extends LibraryItem {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", userId=" + super.getId() +
-                ", mobilNumber=" + mobileNumber +
-                '}';
+        return name + ", userId - " + super.getId() + ", mobilNumber - " + mobileNumber;
     }
 }
