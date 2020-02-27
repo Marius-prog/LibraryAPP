@@ -148,15 +148,6 @@ public class Library {
     }
 
 
-//    public String findBookByAuthor(String author) {
-//        try {
-//            return searchBookList(author, BookFields.AUTHOR).toString();
-//        } catch (Exception e) {
-//            return "sorry we don't have any book for this author NAME!";
-//        }
-//    }
-
-
     public List<Book> searchBookByAuthor(String authorName) {
         List<Book> booksForAuthor = new ArrayList<>();
         for (Book book : books)
