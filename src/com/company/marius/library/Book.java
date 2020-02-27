@@ -74,7 +74,7 @@ public class Book extends LibraryItem {
                 + "Author: " + author + "\n"
                 + "Id: " + super.getId() + "\n"
                 + "Isbn:" + isbn + "\n"
-                + "description: " + description;
+                + "Description: " + description;
 
     }
 

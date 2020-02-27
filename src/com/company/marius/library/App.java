@@ -72,7 +72,7 @@ public class App {
         else if (choice.equals("3"))
             deleteUser(sc);
         else System.out.println("bye bye!");
-        System.exit(0);
+        //System.exit(0);
 
     }
 
@@ -291,14 +291,14 @@ public class App {
     private static void userPrintAllBookInfo(Scanner sc) {
 
         int id = handleNumericInput(sc, "\nEnter ID: ");
-        try {
+
             Book book = library.getBookById(id);
             if (book == null) System.out.println("No such book is in library !");
             System.out.println(book.bookExtendedInfo());
-        } catch (Exception io) {
+
             System.out.println("---------------------------------");
         }
-    }
+
 
 
     private static int handleNumericInput(Scanner sc, String message) {

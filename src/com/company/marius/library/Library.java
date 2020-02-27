@@ -63,10 +63,9 @@ public class Library {
 
     public void printAllBooks() {
         for (Book book : books) {
-                System.out.println(book);
-
-            }
+            System.out.println(book);
         }
+    }
 
 
     public int checkIfUserExistsAndReturnIdx(int id) {
@@ -147,6 +146,16 @@ public class Library {
         }
         return bookUnderInvestigation;
     }
+
+
+//    public String findBookByAuthor(String author) {
+//        try {
+//            return searchBookList(author, BookFields.AUTHOR).toString();
+//        } catch (Exception e) {
+//            return "sorry we don't have any book for this author NAME!";
+//        }
+//    }
+
 
     public List<Book> searchBookByAuthor(String authorName) {
         List<Book> booksForAuthor = new ArrayList<>();
